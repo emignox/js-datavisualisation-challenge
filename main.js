@@ -3,6 +3,8 @@ containerDiv.id = 'container';
 const canvasElement = document.createElement('canvas');
 canvasElement.id = 'canvas';
 
+canvasElement.style.height = '600';
+
 containerDiv.appendChild(canvasElement);
 
 document.body.appendChild(containerDiv);
@@ -16,7 +18,7 @@ const parentContainer = h3Element.parentElement;
 // Inserisci il nuovo div subito dopo l'elemento h3
 parentContainer.insertBefore(containerDiv, h3Element.nextSibling);
 
-//GRAPHICS111111//////////////
+// GRAPHICS1//////////////
 
 document.addEventListener('DOMContentLoaded', () => {
   const ctx = document.getElementById('canvas').getContext('2d');
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   };
 
-     new Chart(ctx, config);
+  new Chart(ctx, config);
 
   function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -142,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return color;
   }
 });
-//DUXIEME CANVAS //////////////
+// DUXIEME CANVAS //////////////
 
 const newContainerDiv = document.createElement('div');
 newContainerDiv.id = 'newContainer';
@@ -150,7 +152,6 @@ const newCanvasElement = document.createElement('canvas');
 newCanvasElement.id = 'newCanvas';
 newCanvasElement.style.width = '400';
 newCanvasElement.style.height = '200';
-
 
 newContainerDiv.appendChild(newCanvasElement);
 
@@ -164,123 +165,118 @@ newParentContainer.insertBefore(newContainerDiv, newH4Element.nextSibling);
 // GRAPHIC2///////
 
 document.addEventListener('DOMContentLoaded', () => {
-    const newCtx = document.getElementById('newCanvas').getContext('2d');
-  
-    const newCountries = [
-      'Latvia', 'Lithuania', 'Estonia', 'Czech Republic', 'Poland', 'Slovakia', 
-      'Hungary', 'England and Wales (UK)', 'Scotland (UK)', 'Spain', 'Romania', 
-      'Malta', 'Bulgaria', 'Luxembourg', 'Portugal', 'Croatia', 'Italy', 
-      'Greece', 'France', 'Austria', 'Belgium', 'Northern Ireland (UK)', 
-      'The Netherlands', 'Germany', 'Ireland', 'Cyprus', 'Denmark', 
-      'Sweden', 'Slovenia', 'Finland',
-    ];
-  
-    const newData = {
-      labels: ['2007–09', '2010–12'],
-      datasets: [],
-    };
-  
-    const newCountryData = [
-      [312, 312],
-      [247, 307],
-      [266, 253],
-      [198, 217],
-      [228, 214],
-      [159, 197],
-      [148, 169],
-      [151, 154],
-      [150, 154],
-      [158, 152],
-      [132, 150],
-      [126, 143],
-      [132, 132],
-      [139, 126],
-      [106, 120],
-      [108, 116],
-      [98, 113],
-      [105, 112],
-      [99, 106],
-      [101, 104],
-      [93, 101],
-      [84, 91],
-      [90, 84],
-      [89, 84],
-      [76, 80],
-      [84, 78],
-      [66, 72],
-      [74, 71],
-      [66, 65],
-      [63, 60],
-    ];
-  
-    for (let i = 0; i < newCountries.length; i++) {
-      newData.datasets.push({
-        label: newCountries[i],
-        data: newCountryData[i],
-        backgroundColor: getRandomColor(),
-        borderWidth: 1,
-        fill: false,
-      });
-    }
-  
-    const newConfig = {
-      type: 'bar',
-      data: newData,
-      options: {
-        scales: {
-          x: {
+  const newCtx = document.getElementById('newCanvas').getContext('2d');
+
+  const newCountries = [
+    'Latvia', 'Lithuania', 'Estonia', 'Czech Republic', 'Poland', 'Slovakia',
+    'Hungary', 'England and Wales (UK)', 'Scotland (UK)', 'Spain', 'Romania',
+    'Malta', 'Bulgaria', 'Luxembourg', 'Portugal', 'Croatia', 'Italy',
+    'Greece', 'France', 'Austria', 'Belgium', 'Northern Ireland (UK)',
+    'The Netherlands', 'Germany', 'Ireland', 'Cyprus', 'Denmark',
+    'Sweden', 'Slovenia', 'Finland',
+  ];
+
+  const newData = {
+    labels: ['2007–09', '2010–12'],
+    datasets: [],
+  };
+
+  const newCountryData = [
+    [312, 312],
+    [247, 307],
+    [266, 253],
+    [198, 217],
+    [228, 214],
+    [159, 197],
+    [148, 169],
+    [151, 154],
+    [150, 154],
+    [158, 152],
+    [132, 150],
+    [126, 143],
+    [132, 132],
+    [139, 126],
+    [106, 120],
+    [108, 116],
+    [98, 113],
+    [105, 112],
+    [99, 106],
+    [101, 104],
+    [93, 101],
+    [84, 91],
+    [90, 84],
+    [89, 84],
+    [76, 80],
+    [84, 78],
+    [66, 72],
+    [74, 71],
+    [66, 65],
+    [63, 60],
+  ];
+
+  for (let i = 0; i < newCountries.length; i++) {
+    newData.datasets.push({
+      label: newCountries[i],
+      data: newCountryData[i],
+      backgroundColor: getRandomColor(),
+      borderWidth: 1,
+      fill: false,
+    });
+  }
+
+  const newConfig = {
+    type: 'bar',
+    data: newData,
+    options: {
+      scales: {
+        x: {
+          display: true,
+          title: {
             display: true,
-            title: {
-              display: true,
-              text: 'Year',
-            },
+            text: 'Year',
           },
-          y: {
-            type: 'linear',
+        },
+        y: {
+          type: 'linear',
+          display: true,
+          title: {
             display: true,
-            title: {
-              display: true,
-              text: 'Value',
+            text: 'Value',
+          },
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label(context) {
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += context.parsed.y;
+              return label;
             },
           },
         },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label(context) {
-                let label = context.dataset.label || '';
-                if (label) {
-                  label += ': ';
-                }
-                label += context.parsed.y;
-                return label;
-              },
-            },
-          },
-          legend: {
-            labels: {
-              font: {
-                size: 16,
-              },
+        legend: {
+          labels: {
+            font: {
+              size: 18,
             },
           },
         },
       },
-    };
-  
-    new Chart(newCtx, newConfig);
-  
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
+    },
+  };
+
+  new Chart(newCtx, newConfig);
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
-  });
-  
-
-
-
-
+    return color;
+  }
+});
