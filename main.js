@@ -10,7 +10,9 @@ containerDiv.appendChild(canvasElement);
 document.body.appendChild(containerDiv);
 
 // Trova l'elemento h3 nel tuo HTML
-const h3Element = document.getElementById('Crimes_et_d.C3.A9lits_enregistr.C3.A9s_par_les_services_de_police');
+const h3Element = document.getElementById(
+  'Crimes_et_d.C3.A9lits_enregistr.C3.A9s_par_les_services_de_police',
+);
 
 // Trova il contenitore padre dell'elemento h3
 const parentContainer = h3Element.parentElement;
@@ -19,6 +21,7 @@ const parentContainer = h3Element.parentElement;
 parentContainer.insertBefore(containerDiv, h3Element.nextSibling);
 
 /// /////canvas
+
 document.addEventListener('DOMContentLoaded', () => {
   const labels = [];
   const data = [];
@@ -30,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cols = row.querySelectorAll('td');
     if (cols.length > 1) {
       labels.push(cols[0].textContent); // Cambiato da cols[1] a cols[0]
-      data.push(Array.from(cols).slice(2).map((col) => parseFloat(col.textContent.replace(',', '.'))));
+      data.push(
+        Array.from(cols)
+          .slice(1)
+          .map((col) => parseFloat(col.textContent.replace(',', '.'))),
+      );
     }
   });
 
@@ -38,11 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+      labels: [
+        2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012,
+      ],
+
       datasets: data.map((values, index) => ({
         label: labels[index],
         data: values,
-        borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`,
+        borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${
+          Math.random() * 255
+        })`,
         borderWidth: 1,
         fill: false,
       })),
@@ -51,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       responsive: true,
       scales: {
         x: {
-          type: 'linear',
+          type: 'category',
           position: 'bottom',
         },
         y: {
@@ -69,7 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const cols = row.querySelectorAll('td');
       if (cols.length > 1) {
         labels.push(cols[0].textContent);
-        data.push(Array.from(cols).slice(2).map((col) => parseFloat(col.textContent.replace(',', '.'))));
+        data.push(
+          Array.from(cols)
+            .slice(2)
+            .map((col) => parseFloat(col.textContent.replace(',', '.'))),
+        );
       }
     });
     chart.update();
