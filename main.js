@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
               position: 'bottom',
             },
             y: {
-              min: 0,
+              min: -15,
               max: 60,
             },
           },
