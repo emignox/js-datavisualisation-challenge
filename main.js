@@ -267,8 +267,8 @@ document.addEventListener('DOMContentLoaded', function () {
               position: 'bottom',
             },
             y: {
-              min: -15,
-              max: 60,
+              suggestedMin: true,
+              suggestedMax: true,
             },
           },
         },
