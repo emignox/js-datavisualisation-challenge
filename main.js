@@ -205,3 +205,93 @@ document.addEventListener('DOMContentLoaded', () => {
     return color;
   }
 });
+
+//DERNIER CANVAS /////////
+
+const yourNewContainerDiv = document.createElement('div');
+yourNewContainerDiv.id = 'yourNewContainer'; // Cambia l'ID in quello che desideri
+const yourNewCanvasElement = document.createElement('canvas');
+yourNewCanvasElement.id = 'yourNewCanvas'; // Cambia l'ID in quello che desideri
+yourNewContainerDiv.appendChild(yourNewCanvasElement);
+
+document.body.appendChild(yourNewContainerDiv);
+
+const yourNewH1Element = document.getElementById('firstHeading'); // Cambia l'ID in quello che desideri
+
+const yourNewParentContainer = yourNewH1Element.parentElement;
+
+yourNewParentContainer.insertBefore(
+  yourNewContainerDiv,
+  yourNewH1Element.nextSibling,
+);
+
+// GRAFICO
+document.addEventListener('DOMContentLoaded', function () {
+  var dataPoints = [];
+  var chart;
+
+  async function fetchData(url) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Errore nella richiesta:', error);
+      return null;
+    }
+  }
+
+  async function initializeChart() {
+    const initialData = await fetchData("https://canvasjs.com/services/data/datapoints.php?");
+
+    if (initialData) {
+      initialData.forEach(function(value) {
+        dataPoints.push({x: value[0], y: parseInt(value[1])});
+      });
+
+      chart = new Chart("yourNewCanvas", {
+        type: "line",
+        data: {
+          datasets: [{
+            label: "Dati in tempo reale",
+            data: dataPoints,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: false,
+          }],
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'linear',
+              position: 'bottom',
+            },
+            y: {
+              min: 0,
+              max: 60,
+            },
+          },
+        },
+      });
+
+      updateChart();
+    }
+  }
+
+  async function updateChart() {
+    const newData = await fetchData(`https://canvasjs.com/services/data/datapoints.php?xstart=${dataPoints.length + 0}&ystart=${dataPoints[dataPoints.length - 1].y}&length=1&type=json`);
+
+    if (newData) {
+      newData.forEach(function(value) {
+        dataPoints.push({x: parseInt(value[0]), y: parseInt(value[1])});
+      });
+
+      chart.data.datasets[0].data = dataPoints;
+      chart.update();
+    }
+
+    setTimeout(updateChart, 1000);
+  }
+
+  initializeChart();
+});
